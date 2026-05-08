@@ -1,0 +1,56 @@
+<view class="page">
+  <view class="stats-card" wx:if="{{statistics}}">
+    <view class="stats-header">
+      <text class="stats-title">我的成就</text>
+    </view>
+    <view class="stats-grid">
+      <view class="stat-item">
+        <text class="stat-value">{{statistics.totalCooked}}</text>
+        <text class="stat-label">已完成</text>
+      </view>
+      <view class="stat-item">
+        <text class="stat-value">{{statistics.streak}}</text>
+        <text class="stat-label">连续天数</text>
+      </view>
+      <view class="stat-item">
+        <text class="stat-value">{{statistics.favoriteCuisine}}</text>
+        <text class="stat-label">最爱菜系</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="section">
+    <view class="section-header">
+      <text class="section-title">完成记录</text>
+      <text class="section-count">{{completedRecipes.length}}道菜</text>
+    </view>
+
+    <view class="record-list">
+      <view
+        class="record-item"
+        wx:for="{{completedRecipes}}"
+        wx:key="recipeId"
+        bindtap="goToRecipe"
+        data-id="{{item.recipeId}}"
+      >
+        <view class="record-info">
+          <text class="record-name">{{item.recipeName}}</text>
+          <text class="record-date">{{formatDate(item.completedAt)}}</text>
+        </view>
+        <view class="record-rating" wx:if="{{item.rating}}">
+          <text class="stars">{{'⭐'.repeat(item.rating)}}</text>
+        </view>
+        <image wx:if="{{item.photoUrl}}" class="record-photo" src="{{item.photoUrl}}" mode="aspectFill" />
+      </view>
+    </view>
+
+    <view class="empty" wx:if="{{!loading && completedRecipes.length === 0}}">
+      <text>还没有完成记录，开始你的第一道菜吧！</text>
+      <button class="btn-start" bindtap="goToRecipes">浏览食谱</button>
+    </view>
+  </view>
+
+  <view class="loading" wx:if="{{loading}}">
+    <text>加载中...</text>
+  </view>
+</view>

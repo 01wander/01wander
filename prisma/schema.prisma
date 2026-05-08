@@ -1,0 +1,96 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String   @id @default(uuid())
+  email        String   @unique
+  phone        String?  @unique
+  passwordHash String?  @map("password_hash")
+  nickname     String
+  avatar       String?
+  level        Int      @default(1)
+  exp          Int      @default(0)
+  title        String   @default("厨房小白")
+  preferences  Json?
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  progress UserProgress[]
+  badges   UserBadge[]
+  posts    CommunityPost[]
+  likes    CommunityLike[]
+  comments CommunityComment[]
+
+  @@map("users")
+}
+
+model UserProgress {
+  id          Int       @id @default(autoincrement())
+  userId      String    @map("user_id")
+  recipeId    String    @map("recipe_id")
+  completedAt DateTime? @map("completed_at")
+  rating      Int?
+  photoUrl    String?   @map("photo_url")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("user_progress")
+}
+
+model UserBadge {
+  id         Int       @id @default(autoincrement())
+  userId     String    @map("user_id")
+  badgeId    String    @map("badge_id")
+  unlockedAt DateTime  @default(now()) @map("unlocked_at")
+  progress   Int       @default(0)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("user_badges")
+}
+
+model CommunityPost {
+  id        String   @id @default(uuid())
+  userId    String   @map("user_id")
+  recipeId  String?  @map("recipe_id")
+  content   String   @db.Text
+  createdAt DateTime @default(now()) @map("created_at")
+
+  user     User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  likes    CommunityLike[]
+  comments CommunityComment[]
+
+  @@map("community_posts")
+}
+
+model CommunityLike {
+  id        Int      @id @default(autoincrement())
+  userId    String   @map("user_id")
+  postId    String   @map("post_id")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  user User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  post CommunityPost @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, postId])
+  @@map("community_likes")
+}
+
+model CommunityComment {
+  id        String   @id @default(uuid())
+  userId    String   @map("user_id")
+  postId    String   @map("post_id")
+  content   String   @db.Text
+  createdAt DateTime @default(now()) @map("created_at")
+
+  user User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  post CommunityPost @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@map("community_comments")
+}
