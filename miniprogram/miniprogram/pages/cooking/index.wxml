@@ -1,0 +1,90 @@
+<view class="page" wx:if="{{!loading && recipe}}">
+  <view class="hero-section">
+    <image class="recipe-image" src="{{recipe.images[0]}}" mode="aspectFill" />
+    <view class="hero-overlay">
+      <text class="recipe-name">{{recipe.name}}</text>
+    </view>
+  </view>
+
+  <view class="progress-bar">
+    <view class="progress-track">
+      <view class="progress-fill" style="width: {{(completedSteps.length / recipe.steps.length) * 100}}%"></view>
+    </view>
+    <text class="progress-text">{{completedSteps.length}} / {{recipe.steps.length}}</text>
+  </view>
+
+  <view class="nav-btns">
+    <button class="nav-btn" bindtap="prevStep" disabled="{{currentStep <= 1}}">上一步</button>
+    <view class="current-step-indicator">步骤 {{currentStep}}</view>
+    <button class="nav-btn" bindtap="nextStep" disabled="{{currentStep >= recipe.steps.length}}">下一步</button>
+  </view>
+
+  <view class="step-card">
+    <view class="step-header">
+      <view class="step-number-lg">{{currentStep}}</view>
+      <view class="step-title-area">
+        <text class="step-title">{{recipe.steps[currentStep - 1].title}}</text>
+        <text class="step-subtitle">步骤 {{currentStep}} / {{recipe.steps.length}}</text>
+      </view>
+    </view>
+    <text class="step-description">{{recipe.steps[currentStep - 1].description}}</text>
+    <image
+      wx:if="{{recipe.steps[currentStep - 1].image}}"
+      class="step-image"
+      src="{{recipe.steps[currentStep - 1].image}}"
+      mode="aspectFill"
+    />
+  </view>
+
+  <view class="timers-area" wx:if="{{timers.length > 0}}">
+    <view class="timers-title">计时器</view>
+    <view class="timer-cards">
+      <view class="timer-card" wx:for="{{timers}}" wx:key="id">
+        <text class="timer-name">{{item.name}}</text>
+        <text class="timer-time">{{formatTime(item.remaining)}}</text>
+        <view class="timer-btns">
+          <button
+            wx:if="{{item.running}}"
+            class="timer-btn pause"
+            bindtap="pauseTimer"
+            data-index="{{index}}"
+          >暂停</button>
+          <button
+            wx:else
+            class="timer-btn resume"
+            bindtap="resumeTimer"
+            data-index="{{index}}"
+          >继续</button>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="steps-overview">
+    <view class="overview-title">步骤列表</view>
+    <view class="steps-list">
+      <view
+        wx:for="{{recipe.steps}}"
+        wx:key="number"
+        class="step-item {{completedSteps.includes(item.number) ? 'completed' : ''}} {{item.number === currentStep ? 'active' : ''}}"
+        bindtap="setData({currentStep: {{item.number}}})"
+      >
+        <view class="step-dot">
+          <text wx:if="{{completedSteps.includes(item.number)}}">✓</text>
+          <text wx:else>{{item.number}}</text>
+        </view>
+        <text class="step-item-title">{{item.title}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="bottom-action">
+    <button class="btn-complete" bindtap="completeStep">
+      {{currentStep >= recipe.steps.length ? '完成烹饪' : '标记完成'}}
+    </button>
+  </view>
+</view>
+
+<view class="loading" wx:if="{{loading}}">
+  <text>加载中...</text>
+</view>

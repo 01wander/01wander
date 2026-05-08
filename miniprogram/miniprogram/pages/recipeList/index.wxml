@@ -1,0 +1,50 @@
+<view class="page">
+  <view class="filter-section">
+    <scroll-view scroll-x class="filter-scroll">
+      <view class="filter-list">
+        <view
+          wx:for="{{cuisines}}"
+          wx:key="id"
+          class="filter-item {{selectedCuisine === item.id ? 'active' : ''}}"
+          bindtap="selectCuisine"
+          data-cuisine="{{item.id}}"
+        >
+          {{item.name}}
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+
+  <view class="recipe-grid">
+    <view
+      wx:for="{{recipes}}"
+      wx:key="_id"
+      class="recipe-card"
+      bindtap="goToRecipeDetail"
+      data-id="{{item._id}}"
+    >
+      <image class="recipe-image" src="{{item.images[0]}}" mode="aspectFill" />
+      <view class="recipe-info">
+        <text class="recipe-name">{{item.name}}</text>
+        <view class="recipe-meta">
+          <text class="recipe-difficulty" style="color: {{getDifficultyColor(item.difficulty)}}">
+            {{getDifficultyText(item.difficulty)}}
+          </text>
+          <text class="recipe-time">{{item.cookTime}}分钟</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="loading" wx:if="{{loading && recipes.length > 0}}">
+    <text>加载更多...</text>
+  </view>
+
+  <view class="empty" wx:if="{{!loading && recipes.length === 0}}">
+    <text>暂无食谱</text>
+  </view>
+
+  <view class="loading-full" wx:if="{{loading && recipes.length === 0}}">
+    <text>加载中...</text>
+  </view>
+</view>

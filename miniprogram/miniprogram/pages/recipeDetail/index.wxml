@@ -1,0 +1,100 @@
+<view class="page" wx:if="{{!loading && recipe}}">
+  <view class="hero-image">
+    <image
+      src="{{recipe.images[0]}}"
+      mode="aspectFill"
+      bindtap="previewImage"
+      data-urls="{{recipe.images}}"
+      data-current="{{recipe.images[0]}}"
+    />
+    <view class="difficulty-badge" style="background: {{getDifficultyColor(recipe.difficulty)}}">
+      {{getDifficultyText(recipe.difficulty)}}
+    </view>
+  </view>
+
+  <view class="content">
+    <view class="title-section">
+      <text class="recipe-name">{{recipe.name}}</text>
+      <text class="recipe-name-en">{{recipe.nameEn}}</text>
+    </view>
+
+    <view class="meta-row">
+      <view class="meta-item">
+        <text class="meta-icon">⏱️</text>
+        <text class="meta-value">{{recipe.cookTime}}</text>
+        <text class="meta-label">分钟</text>
+      </view>
+      <view class="meta-item">
+        <text class="meta-icon">👥</text>
+        <text class="meta-value">{{recipe.servings}}</text>
+        <text class="meta-label">份</text>
+      </view>
+      <view class="meta-item">
+        <text class="meta-icon">🌍</text>
+        <text class="meta-value">{{recipe.cuisine}}</text>
+        <text class="meta-label">菜系</text>
+      </view>
+    </view>
+
+    <view class="description">
+      <text>{{recipe.description}}</text>
+    </view>
+
+    <view class="section">
+      <view class="section-title">食材</view>
+      <view class="servings-adj">
+        <text class="servings-label">份量调整: {{servings}}份</text>
+        <view class="servings-btns">
+          <view class="servings-btn" bindtap="adjustServings" data-delta="-1">-</view>
+          <view class="servings-btn" bindtap="adjustServings" data-delta="1">+</view>
+        </view>
+      </view>
+      <view class="ingredient-list">
+        <view class="ingredient-item" wx:for="{{recipe.ingredients}}" wx:key="name">
+          <text class="ingredient-name">{{item.name}}</text>
+          <text class="ingredient-qty">{{calculateQuantity(item.quantity)}} {{item.unit}}</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="section">
+      <view class="section-title">步骤</view>
+      <view class="step-list">
+        <view class="step-item" wx:for="{{recipe.steps}}" wx:key="number">
+          <view class="step-number">{{item.number}}</view>
+          <view class="step-content">
+            <text class="step-title">{{item.title}}</text>
+            <text class="step-desc">{{item.description}}</text>
+            <image
+              wx:if="{{item.image}}"
+              class="step-image"
+              src="{{item.image}}"
+              mode="aspectFill"
+              bindtap="previewImage"
+              data-urls="{{[item.image]}}"
+              data-current="{{item.image}}"
+            />
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="timers-section" wx:if="{{recipe.timers.length > 0}}">
+      <view class="section-title">计时器</view>
+      <view class="timer-list">
+        <view class="timer-item" wx:for="{{recipe.timers}}" wx:key="id">
+          <text class="timer-name">{{item.name}}</text>
+          <text class="timer-duration">{{item.duration}}秒</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="bottom-action">
+    <button class="btn-start" bindtap="startCooking">开始烹饪</button>
+  </view>
+</view>
+
+<view class="loading" wx:if="{{loading}}">
+  <text>加载中...</text>
+</view>

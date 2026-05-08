@@ -1,0 +1,111 @@
+{
+  "common": {
+    "appName": "全球风味厨房",
+    "loading": "加载中...",
+    "noData": "暂无数据",
+    "error": "加载失败，请重试",
+    "success": "操作成功",
+    "cancel": "取消",
+    "confirm": "确认",
+    "save": "保存",
+    "delete": "删除",
+    "edit": "编辑",
+    "search": "搜索",
+    "share": "分享"
+  },
+  "nav": {
+    "home": "首页",
+    "recipes": "食谱",
+    "community": "社区",
+    "progress": "进度",
+    "profile": "我的"
+  },
+  "home": {
+    "heroTitle": "探索全球美味",
+    "heroSubtitle": "从新手到大厨，让烹饪变得简单有趣",
+    "searchPlaceholder": "搜索食谱...",
+    "browseByCuisine": "按菜系浏览",
+    "popularRecipes": "热门食谱",
+    "viewAll": "查看全部"
+  },
+  "recipe": {
+    "difficulty": "难度",
+    "easy": "简单",
+    "medium": "中等",
+    "hard": "困难",
+    "cookTime": "烹饪时间",
+    "servings": "份",
+    "minutes": "分钟",
+    "ingredients": "食材",
+    "steps": "步骤",
+    "tips": "小技巧",
+    "startCooking": "开始烹饪",
+    "servingsAdjust": "份量调整",
+    "substitutes": "替代食材",
+    "optional": "可选"
+  },
+  "cooking": {
+    "step": "步骤",
+    "of": "/",
+    "prevStep": "上一步",
+    "nextStep": "下一步",
+    "markComplete": "标记完成",
+    "completeCooking": "完成烹饪",
+    "timer": "计时器",
+    "pause": "暂停",
+    "resume": "继续",
+    "congratulations": "恭喜完成！",
+    "uploadWork": "上传作品"
+  },
+  "community": {
+    "posts": "帖子",
+    "publish": "发布",
+    "like": "点赞",
+    "comment": "评论",
+    "share": "分享",
+    "challenges": "话题挑战",
+    "joinChallenge": "参与挑战",
+    "participants": "参与人数"
+  },
+  "progress": {
+    "title": "我的进度",
+    "completedRecipes": "已完成",
+    "streak": "连续天数",
+    "favoriteCuisine": "最爱菜系",
+    "records": "完成记录",
+    "totalDishes": "道菜"
+  },
+  "profile": {
+    "login": "立即登录",
+    "logout": "退出登录",
+    "favorites": "我的收藏",
+    "settings": "设置",
+    "level": "等级",
+    "title": "称号",
+    "exp": "经验值"
+  },
+  "badge": {
+    "achievements": "我的成就",
+    "earned": "已获得",
+    "locked": "未解锁",
+    "progress": "进度"
+  },
+  "encyclopedia": {
+    "title": "食材百科",
+    "category": "分类",
+    "nutrition": "营养成分",
+    "purchaseTips": "购买建议",
+    "storageTips": "储存建议"
+  },
+  "message": {
+    "title": "私信",
+    "conversations": "会话列表",
+    "sendMessage": "发送消息",
+    "noMessages": "暂无消息"
+  },
+  "notification": {
+    "title": "通知",
+    "markAllRead": "全部已读",
+    "noNotifications": "暂无通知"
+  }
+}

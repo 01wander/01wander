@@ -1,0 +1,68 @@
+{
+  "pages": [
+    "pages/home/index",
+    "pages/recipeList/index",
+    "pages/recipeDetail/index",
+    "pages/cooking/index",
+    "pages/community/index",
+    "pages/progress/index",
+    "pages/profile/index",
+    "pages/login/index"
+  ],
+  "subPackages": [],
+  "window": {
+    "navigationBarBackgroundColor": "#FF8C42",
+    "navigationBarTitleText": "全球风味厨房",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#F5F5F5",
+    "backgroundTextStyle": "dark",
+    "enablePullDownRefresh": true,
+    "onReachBottomDistance": 50
+  },
+  "tabBar": {
+    "color": "#999999",
+    "selectedColor": "#FF8C42",
+    "backgroundColor": "#FFFFFF",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/home/index",
+        "text": "首页",
+        "iconPath": "assets/icons/home.png",
+        "selectedIconPath": "assets/icons/home-active.png"
+      },
+      {
+        "pagePath": "pages/recipeList/index",
+        "text": "食谱",
+        "iconPath": "assets/icons/recipe.png",
+        "selectedIconPath": "assets/icons/recipe-active.png"
+      },
+      {
+        "pagePath": "pages/community/index",
+        "text": "社区",
+        "iconPath": "assets/icons/community.png",
+        "selectedIconPath": "assets/icons/community-active.png"
+      },
+      {
+        "pagePath": "pages/progress/index",
+        "text": "进度",
+        "iconPath": "assets/icons/progress.png",
+        "selectedIconPath": "assets/icons/progress-active.png"
+      },
+      {
+        "pagePath": "pages/profile/index",
+        "text": "我的",
+        "iconPath": "assets/icons/profile.png",
+        "selectedIconPath": "assets/icons/profile-active.png"
+      }
+    ]
+  },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "你的位置信息将用于提供更好的服务体验"
+    }
+  },
+  "requiredPrivateInfos": ["chooseAddress"],
+  "usingComponents": {},
+  "lazyCodeLoading": "requiredComponents"
+}

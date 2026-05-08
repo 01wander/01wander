@@ -1,0 +1,68 @@
+<view class="page">
+  <view class="header">
+    <view class="back-btn" bindtap="goBack">←</view>
+    <text class="header-title">{{mode === 'login' ? '登录' : '注册'}}</text>
+    <view class="placeholder"></view>
+  </view>
+
+  <view class="logo-section">
+    <view class="logo">🍳</view>
+    <text class="app-name">全球风味厨房</text>
+    <text class="app-slogan">探索世界美食，品味烹饪乐趣</text>
+  </view>
+
+  <view class="form-section">
+    <view class="input-group">
+      <text class="input-label">邮箱</text>
+      <input
+        class="input-field"
+        type="text"
+        placeholder="请输入邮箱"
+        value="{{email}}"
+        bindinput="onEmailInput"
+      />
+    </view>
+
+    <view class="input-group">
+      <text class="input-label">密码</text>
+      <input
+        class="input-field"
+        type="password"
+        placeholder="请输入密码"
+        value="{{password}}"
+        bindinput="onPasswordInput"
+      />
+    </view>
+
+    <view class="input-group" wx:if="{{mode === 'register'}}">
+      <text class="input-label">昵称</text>
+      <input
+        class="input-field"
+        type="text"
+        placeholder="请输入昵称"
+        value="{{nickname}}"
+        bindinput="onNicknameInput"
+      />
+    </view>
+
+    <button class="btn-submit" bindtap="handleSubmit" loading="{{loading}}">
+      {{mode === 'login' ? '登录' : '注册'}}
+    </button>
+
+    <view class="switch-mode">
+      <text class="switch-text">{{mode === 'login' ? '还没有账号？' : '已有账号？'}}</text>
+      <text class="switch-btn" bindtap="switchMode">{{mode === 'login' ? '立即注册' : '去登录'}}</text>
+    </view>
+
+    <view class="divider">
+      <view class="divider-line"></view>
+      <text class="divider-text">其他登录方式</text>
+      <view class="divider-line"></view>
+    </view>
+
+    <button class="btn-wechat" bindtap="handleWechatLogin">
+      <text class="wechat-icon">💬</text>
+      <text>微信一键登录</text>
+    </button>
+  </view>
+</view>

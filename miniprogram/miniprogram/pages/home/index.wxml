@@ -1,0 +1,80 @@
+<view class="page">
+  <view class="hero">
+    <image class="hero-bg" src="https://neeko-copilot.bytedance.net/api/text_to_image?prompt=delicious%20food%20spread%20cooking%20warm%20lighting&image_size=landscape_16_9" mode="aspectFill" />
+    <view class="hero-overlay"></view>
+    <view class="hero-content">
+      <view class="hero-title">探索全球美味</view>
+      <view class="hero-subtitle">从新手到大厨，让烹饪变得简单有趣</view>
+      <view class="search-box" bindtap="goToSearch">
+        <text class="iconfont icon-search"></text>
+        <text class="search-placeholder">搜索食谱...</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="section">
+    <view class="section-header">
+      <text class="section-title">按菜系浏览</text>
+    </view>
+    <view class="cuisine-grid">
+      <view
+        wx:for="{{cuisines}}"
+        wx:key="id"
+        class="cuisine-item"
+        bindtap="goToRecipeList"
+        data-cuisine="{{item.id}}"
+      >
+        <view class="cuisine-icon">{{item.icon}}</view>
+        <text class="cuisine-name">{{item.name}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="section">
+    <view class="section-header">
+      <text class="section-title">热门食谱</text>
+      <text class="section-more" bindtap="goToRecipeList">查看全部</text>
+    </view>
+    <view class="recipe-list">
+      <view
+        wx:for="{{recipes}}"
+        wx:key="_id"
+        class="recipe-card"
+        bindtap="goToRecipeDetail"
+        data-id="{{item._id}}"
+      >
+        <image class="recipe-image" src="{{item.images[0]}}" mode="aspectFill" />
+        <view class="recipe-info">
+          <text class="recipe-name">{{item.name}}</text>
+          <view class="recipe-meta">
+            <text class="recipe-difficulty" style="color: {{getDifficultyColor(item.difficulty)}}">
+              {{getDifficultyText(item.difficulty)}}
+            </text>
+            <text class="recipe-time">{{item.cookTime}}分钟</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="stats-section" wx:if="{{userStats}}">
+    <view class="stats-card">
+      <view class="stats-item">
+        <text class="stats-value">{{userStats.streak}}</text>
+        <text class="stats-label">连续天数</text>
+      </view>
+      <view class="stats-item">
+        <text class="stats-value">{{userStats.totalCooked}}</text>
+        <text class="stats-label">已完成</text>
+      </view>
+      <view class="stats-item">
+        <text class="stats-value">{{userStats.favoriteCuisine}}</text>
+        <text class="stats-label">最爱菜系</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="loading" wx:if="{{loading}}">
+    <text>加载中...</text>
+  </view>
+</view>
