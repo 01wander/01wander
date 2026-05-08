@@ -7,8 +7,12 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import authRoutes from './routes/auth.js';
 import recipeRoutes from './routes/recipes.js';
+import favoritesRoutes from './routes/favorites.js';
 import progressRoutes from './routes/progress.js';
 import communityRoutes from './routes/community.js';
+import badgesRoutes from './routes/badges.js';
+import notificationsRoutes from './routes/notifications.js';
+import challengesRoutes from './routes/challenges.js';
 
 dotenv.config();
 
@@ -20,8 +24,12 @@ app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
 app.use('/api/auth', authRoutes);
 app.use('/api/recipes', recipeRoutes);
+app.use('/api/favorites', favoritesRoutes);
 app.use('/api/progress', progressRoutes);
 app.use('/api/community', communityRoutes);
+app.use('/api/badges', badgesRoutes);
+app.use('/api/notifications', notificationsRoutes);
+app.use('/api/challenges', challengesRoutes);
 
 app.use('/api/health', (_req: Request, res: Response) => {
   res.status(200).json({ code: 0, message: 'ok', data: null });
