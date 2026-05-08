@@ -1,0 +1,111 @@
+{
+  "common": {
+    "appName": "Global Kitchen",
+    "loading": "Loading...",
+    "noData": "No data",
+    "error": "Failed to load, please retry",
+    "success": "Success",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "search": "Search",
+    "share": "Share"
+  },
+  "nav": {
+    "home": "Home",
+    "recipes": "Recipes",
+    "community": "Community",
+    "progress": "Progress",
+    "profile": "Profile"
+  },
+  "home": {
+    "heroTitle": "Explore Global Flavors",
+    "heroSubtitle": "From beginner to chef, making cooking simple and fun",
+    "searchPlaceholder": "Search recipes...",
+    "browseByCuisine": "Browse by Cuisine",
+    "popularRecipes": "Popular Recipes",
+    "viewAll": "View All"
+  },
+  "recipe": {
+    "difficulty": "Difficulty",
+    "easy": "Easy",
+    "medium": "Medium",
+    "hard": "Hard",
+    "cookTime": "Cook Time",
+    "servings": "servings",
+    "minutes": "min",
+    "ingredients": "Ingredients",
+    "steps": "Steps",
+    "tips": "Tips",
+    "startCooking": "Start Cooking",
+    "servingsAdjust": "Adjust Servings",
+    "substitutes": "Substitutes",
+    "optional": "Optional"
+  },
+  "cooking": {
+    "step": "Step",
+    "of": "of",
+    "prevStep": "Previous",
+    "nextStep": "Next",
+    "markComplete": "Mark Complete",
+    "completeCooking": "Complete",
+    "timer": "Timer",
+    "pause": "Pause",
+    "resume": "Resume",
+    "congratulations": "Congratulations!",
+    "uploadWork": "Upload Your Work"
+  },
+  "community": {
+    "posts": "Posts",
+    "publish": "Publish",
+    "like": "Like",
+    "comment": "Comment",
+    "share": "Share",
+    "challenges": "Challenges",
+    "joinChallenge": "Join Challenge",
+    "participants": "Participants"
+  },
+  "progress": {
+    "title": "My Progress",
+    "completedRecipes": "Completed",
+    "streak": "Day Streak",
+    "favoriteCuisine": "Favorite Cuisine",
+    "records": "Records",
+    "totalDishes": "dishes"
+  },
+  "profile": {
+    "login": "Login Now",
+    "logout": "Logout",
+    "favorites": "My Favorites",
+    "settings": "Settings",
+    "level": "Level",
+    "title": "Title",
+    "exp": "EXP"
+  },
+  "badge": {
+    "achievements": "Achievements",
+    "earned": "Earned",
+    "locked": "Locked",
+    "progress": "Progress"
+  },
+  "encyclopedia": {
+    "title": "Ingredient Encyclopedia",
+    "category": "Category",
+    "nutrition": "Nutrition",
+    "purchaseTips": "Purchase Tips",
+    "storageTips": "Storage Tips"
+  },
+  "message": {
+    "title": "Messages",
+    "conversations": "Conversations",
+    "sendMessage": "Send Message",
+    "noMessages": "No messages"
+  },
+  "notification": {
+    "title": "Notifications",
+    "markAllRead": "Mark All Read",
+    "noNotifications": "No notifications"
+  }
+}

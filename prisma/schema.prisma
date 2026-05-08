@@ -18,18 +18,22 @@ model User {
   exp          Int      @default(0) @map("exp")
   title        String   @default("厨房小白") @map("title") @db.VarChar(50)
   preferences  Json?    @map("preferences")
+  language     String   @default("zh") @map("language") @db.VarChar(10)
   status       Int      @default(1) @map("status")
   createdAt    DateTime @default(now()) @map("created_at")
   updatedAt    DateTime @updatedAt @map("updated_at")
 
-  progress   UserProgress[]
-  badges     UserBadge[]
-  favorites  Favorite[]
-  posts      CommunityPost[]
-  likes      CommunityLike[]
-  comments   CommunityComment[]
-  notifies   Notification[]
-  sessions   CookingSession[]
+  progress     UserProgress[]
+  badges       UserBadge[]
+  favorites    Favorite[]
+  posts        CommunityPost[]
+  likes        CommunityLike[]
+  comments     CommunityComment[]
+  notifies     Notification[]
+  sessions     CookingSession[]
+  searchHistory SearchHistory[]
+  sentMessages Message[]     @relation("SentMessages")
+  receivedMessages Message[]  @relation("ReceivedMessages")
 
   @@index([email])
   @@index([phone])
@@ -74,7 +78,9 @@ model UserBadge {
 model Badge {
   id          String    @id @default(uuid())
   name        String    @map("name") @db.VarChar(100)
+  nameEn      String    @map("name_en") @db.VarChar(100)
   description String    @map("description") @db.Text
+  descriptionEn String  @map("description_en") @db.Text
   icon        String    @map("icon") @db.VarChar(50)
   type        String    @map("type") @db.VarChar(50)
   requirement Int       @map("requirement")
@@ -110,11 +116,13 @@ model Recipe {
   cookTime    Int      @map("cook_time")
   servings    Int      @default(4) @map("servings")
   description String   @map("description") @db.Text
+  descriptionEn String  @map("description_en") @db.Text
   images      Json    @map("images")
   videoUrl    String?  @map("video_url") @db.VarChar(255)
   tags        Json    @map("tags")
   viewCount   Int      @default(0) @map("view_count")
   favoriteCount Int    @default(0) @map("favorite_count")
+  shareCount  Int      @default(0) @map("share_count")
   status      Int      @default(1) @map("status")
   authorId    String?  @map("author_id") @db.VarChar(36)
   createdAt   DateTime @default(now()) @map("created_at")
@@ -142,6 +150,8 @@ model Ingredient {
   unit         String    @map("unit") @db.VarChar(20)
   substitutes  Json?     @map("substitutes")
   description  String?   @map("description") @db.Text
+  descriptionEn String?  @map("description_en") @db.Text
+  nutrition    Json?     @map("nutrition")
   isOptional   Boolean   @default(false) @map("is_optional")
   sortOrder    Int       @default(0) @map("sort_order")
 
@@ -151,15 +161,40 @@ model Ingredient {
   @@map("ingredients")
 }
 
+model IngredientEncyclopedia {
+  id            String   @id @default(uuid())
+  name          String   @map("name") @db.VarChar(100)
+  nameEn        String   @map("name_en") @db.VarChar(100)
+  nameJa        String?  @map("name_ja") @db.VarChar(100)
+  nameKo        String?  @map("name_ko") @db.VarChar(100)
+  category      String   @map("category") @db.VarChar(50)
+  description   String   @map("description") @db.Text
+  descriptionEn String   @map("description_en") @db.Text
+  substitutes   Json    @default("[]") @map("substitutes")
+  nutrition     Json?   @map("nutrition")
+  purchaseTips  String?  @map("purchase_tips") @db.Text
+  storageTips   String?  @map("storage_tips") @db.Text
+  image         String?  @map("image") @db.VarChar(255)
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+
+  @@index([category])
+  @@index([name])
+  @@map("ingredient_encyclopedia")
+}
+
 model Step {
   id          Int       @id @default(autoincrement()) @map("id")
   recipeId    String    @map("recipe_id") @db.VarChar(36)
   number      Int       @map("number")
   title       String    @map("title") @db.VarChar(200)
+  titleEn     String?    @map("title_en") @db.VarChar(200)
   description String    @map("description") @db.Text
+  descriptionEn String? @map("description_en") @db.Text
   image       String?   @map("image") @db.VarChar(255)
   videoUrl    String?   @map("video_url") @db.VarChar(255)
   tips        String?   @map("tips") @db.Text
+  tipsEn      String?   @map("tips_en") @db.Text
   duration    Int?      @map("duration")
 
   recipe Recipe @relation(fields: [recipeId], references: [id], onDelete: Cascade)
@@ -172,6 +207,7 @@ model Timer {
   id          Int      @id @default(autoincrement()) @map("id")
   recipeId    String   @map("recipe_id") @db.VarChar(36)
   name        String   @map("name") @db.VarChar(100)
+  nameEn      String?  @map("name_en") @db.VarChar(100)
   duration    Int      @map("duration")
   stepNumber  Int      @map("step_number")
   createdAt   DateTime @default(now()) @map("created_at")
@@ -207,6 +243,7 @@ model CommunityPost {
   images    Json     @default("[]") @map("images")
   likes     Int      @default(0) @map("likes")
   comments  Int      @default(0) @map("comments")
+  shares    Int      @default(0) @map("shares")
   status    Int      @default(1) @map("status")
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
@@ -241,13 +278,16 @@ model CommunityComment {
   id        String   @id @default(uuid())
   userId    String   @map("user_id") @db.VarChar(36)
   postId    String   @map("post_id") @db.VarChar(36)
-  content   String   @map("content") @db.Text
   parentId  String?  @map("parent_id") @db.VarChar(36)
+  content   String   @map("content") @db.Text
+  likes     Int      @default(0) @map("likes")
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
   user  User          @relation(fields: [userId], references: [id], onDelete: Cascade)
   post  CommunityPost @relation(fields: [postId], references: [id], onDelete: Cascade)
+  parent CommunityComment? @relation("CommentReplies", fields: [parentId], references: [id], onDelete: Cascade)
+  replies CommunityComment[] @relation("CommentReplies")
 
   @@index([userId])
   @@index([postId])
@@ -258,7 +298,9 @@ model CommunityComment {
 model Challenge {
   id          String    @id @default(uuid())
   name        String    @map("name") @db.VarChar(200)
+  nameEn      String?   @map("name_en") @db.VarChar(200)
   description String    @map("description") @db.Text
+  descriptionEn String  @map("description_en") @db.Text
   hashtag     String    @map("hashtag") @db.VarChar(100)
   image       String?   @map("image") @db.VarChar(255)
   startDate   DateTime  @map("start_date")
@@ -309,4 +351,36 @@ model Notification {
   @@index([isRead])
   @@index([createdAt])
   @@map("notifications")
+}
+
+model SearchHistory {
+  id        Int      @id @default(autoincrement()) @map("id")
+  userId    String   @map("user_id") @db.VarChar(36)
+  keyword   String   @map("keyword") @db.VarChar(200)
+  type      String   @default("recipe") @map("type") @db.VarChar(20)
+  createdAt DateTime @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([createdAt])
+  @@map("search_history")
+}
+
+model Message {
+  id         String   @id @default(uuid())
+  senderId   String   @map("sender_id") @db.VarChar(36)
+  receiverId String   @map("receiver_id") @db.VarChar(36)
+  content    String   @map("content") @db.Text
+  type       String   @default("text") @map("type") @db.VarChar(20)
+  isRead     Boolean  @default(false) @map("is_read")
+  createdAt  DateTime @default(now()) @map("created_at")
+
+  sender   User @relation("SentMessages", fields: [senderId], references: [id], onDelete: Cascade)
+  receiver User @relation("ReceivedMessages", fields: [receiverId], references: [id], onDelete: Cascade)
+
+  @@index([senderId])
+  @@index([receiverId])
+  @@index([createdAt])
+  @@map("messages")
 }
